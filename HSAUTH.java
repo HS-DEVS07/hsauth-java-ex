@@ -15,6 +15,7 @@ public class HSAUTH {
 
     public String name;
     public String ownerid;
+    public String secret;
     public String version;
     public String apiUrl;
     public String sessionid;
@@ -24,16 +25,20 @@ public class HSAUTH {
     public Map<String, String> appData = new HashMap<>();
     public Map<String, String> lastResponse = new HashMap<>();
 
-    public HSAUTH(String name, String ownerid, String version, String apiUrl) {
+    public HSAUTH(String name, String ownerid, String secret, String version, String apiUrl) {
+        if (name == null || name.isEmpty() || ownerid == null || ownerid.isEmpty() || secret == null || secret.isEmpty()) {
+            throw new IllegalArgumentException("Application name, ownerid, and secret are all required.");
+        }
         this.name = name;
         this.ownerid = ownerid;
+        this.secret = secret;
         this.version = (version == null || version.isEmpty()) ? "1.0" : version;
         this.apiUrl = (apiUrl == null || apiUrl.isEmpty()) ? "https://hsauth.mujahid.xyz/api/1.3/" : apiUrl;
         if (!this.apiUrl.endsWith("/")) this.apiUrl += "/";
     }
 
-    public HSAUTH(String name, String ownerid, String version) {
-        this(name, ownerid, version, "https://hsauth.mujahid.xyz/api/1.3/");
+    public HSAUTH(String name, String ownerid, String secret, String version) {
+        this(name, ownerid, secret, version, "https://hsauth.mujahid.xyz/api/1.3/");
     }
 
     public static String getHWID() {
@@ -57,8 +62,12 @@ public class HSAUTH {
     }
 
     private String req(Map<String, String> data) {
+        if (this.secret == null || this.secret.isEmpty()) {
+            return "{\"success\":false,\"message\":\"Application secret is required\"}";
+        }
         data.put("name", this.name);
         data.put("ownerid", this.ownerid);
+        data.put("secret", this.secret);
 
         try {
             StringBuilder postData = new StringBuilder();

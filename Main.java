@@ -7,6 +7,7 @@ public class Main {
         HSAUTH auth = new HSAUTH(
             "MyApp",
             "your_app_identifier_here",
+            "your_app_secret_here",
             "1.0",
             "https://hsauth.mujahid.xyz/api/1.3/"
         );
