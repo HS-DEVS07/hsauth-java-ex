@@ -33,12 +33,12 @@ public class HSAUTH {
         this.ownerid = ownerid;
         this.secret = secret;
         this.version = (version == null || version.isEmpty()) ? "1.0" : version;
-        this.apiUrl = (apiUrl == null || apiUrl.isEmpty()) ? "https://hsauth.mujahid.xyz/api/1.3/" : apiUrl;
+        this.apiUrl = (apiUrl == null || apiUrl.isEmpty()) ? "https://auth.hsdevs.pro/api/1.3/" : apiUrl;
         if (!this.apiUrl.endsWith("/")) this.apiUrl += "/";
     }
 
     public HSAUTH(String name, String ownerid, String secret, String version) {
-        this(name, ownerid, secret, version, "https://hsauth.mujahid.xyz/api/1.3/");
+        this(name, ownerid, secret, version, "https://auth.hsdevs.pro/api/1.3/");
     }
 
     public static String getHWID() {
